@@ -3,6 +3,8 @@ import '../styles/global.css';
 import { getEpisodes } from '../utils/rss';
 import Navbar from '../components/NavBar.astro';
 import AudioPlayer from '../components/AudioPlayer.astro';
+import SupportModal from '../components/SupportModal.astro';
+
 
 const SPOTIFY_RSS_URL = 'https://anchor.fm/s/115f159d0/podcast/rss';
 const episodes = await getEpisodes(SPOTIFY_RSS_URL);
@@ -240,6 +242,9 @@ const cleanText = (str: string) => {
         }
       });
     </script>
+
+    <!-- 2. Self-contained Support Modal Component -->
+    <SupportModal />
 
   </body>
 </html>

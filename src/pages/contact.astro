@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/NavBar.astro';
+import SupportModal from '../components/SupportModal.astro';
 
 // Replace with your actual Google reCAPTCHA v2 (Checkbox) Site Key
 const RECAPTCHA_SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY_HERE';
@@ -208,5 +209,7 @@ const RECAPTCHA_SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY_HERE';
         }
       });
     </script>
+    <!-- 2. Self-contained Support Modal Component -->
+    <SupportModal />
   </body>
 </html>
