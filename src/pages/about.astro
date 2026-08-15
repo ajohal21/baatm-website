@@ -1,0 +1,291 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import SupportModal from '../components/SupportModal.astro';
+---
+
+<html lang="en" class="bg-neutral-950 text-neutral-100 font-sans antialiased selection:bg-amber-500/20 selection:text-amber-200">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About | Before and After the Movies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <!-- Navigation Bar -->
+    <Navbar currentPath="/about" />
+
+    <main class="w-full flex-grow relative overflow-hidden">
+      
+      <!-- HERO & MAIN BLURB SECTION -->
+      <section class="relative overflow-hidden bg-neutral-950 border-b border-neutral-900/80 pt-16 pb-12 md:pt-24 md:pb-16">
+        
+        <!-- Ambient Background Glow & Gradients -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-950/25 via-neutral-950/90 to-neutral-950 pointer-events-none"></div>
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-amber-950/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+        <!-- Faded Watermark Typography -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <span class="text-[20vw] font-black tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-b from-white/5 to-transparent leading-none whitespace-nowrap">
+            ABOUT
+          </span>
+        </div>
+
+        <div class="relative max-w-4xl mx-auto px-6 z-10 space-y-8">
+          
+          <!-- Category Eyebrow -->
+          <div class="space-y-1">
+            <p class="text-xs font-mono tracking-widest text-amber-400/80 uppercase font-semibold">
+              The Story Behind The Show
+            </p>
+            <div class="w-12 h-[1px] bg-amber-500/30"></div>
+          </div>
+
+          <!-- Main Title -->
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-amber-50 leading-[1.1]">
+            Two perspectives. <br />
+            <span class="italic font-normal text-amber-400">One shared screen.</span>
+          </h1>
+
+          <!-- Text Blurb -->
+          <div class="space-y-4 max-w-3xl pt-2">
+            <p class="text-neutral-300 text-base md:text-lg font-sans leading-relaxed">
+              What do we anticipate before the lights go down, and what sticks with us after the credits roll? We unpack hype, expectations, and the lingering aftertaste of great cinema. Every episode brings a balance of pre-watch predictions, spoiler-free first impressions, and deep spoiler discussions on everything from Oscar's favourites to massive blockbuster events.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MEET YOUR HOSTS SECTION -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20 md:pt-16 md:pb-28 space-y-12">
+        
+        <!-- Centered Header with Guaranteed Amber Bar -->
+        <div class="flex flex-col items-center justify-center text-center">
+          <p class="text-xs sm:text-sm font-mono uppercase tracking-widest text-amber-400 font-semibold py-2">
+            Behind The Mics
+          </p>
+          <h2 class="text-3xl sm:text-5xl md:text-6xl font-serif font-bold text-amber-50 tracking-tight" style="font-size: clamp(2.25rem, 4vw, 3.75rem);">
+            Meet Your Hosts
+          </h2>
+          <!-- Exact Subtle Amber Divider -->
+          <div 
+            class="mt-4 rounded-full" 
+            style="width: 56px; height: 2px; background-color: rgba(245, 158, 11, 0.45);"
+          ></div>
+        </div>
+
+        <!-- Dynamic Grid: Stacks on mobile/tablet (1 col), Side-by-side on desktop (2 cols) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch w-full">
+          
+          <!-- HOST 1: AMAN -->
+          <div class="w-full bg-neutral-900/40 border border-neutral-800/80 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 backdrop-blur-sm flex flex-col justify-between hover:border-neutral-700/80 transition-colors shadow-2xl">
+            <div class="space-y-6">
+              <!-- Top Row: Avatar & Name on left, Monospace Role on right -->
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-center gap-4 sm:gap-6 md:gap-8">
+                  <!-- Responsive Square Avatar -->
+                  <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden border-2 border-amber-500/50 bg-neutral-950 shrink-0 shadow-xl shadow-black/60">
+                    <img 
+                      src="/avatars/aman.jpg" 
+                      alt="Aman" 
+                      class="w-full h-full object-cover object-top block"
+                      onerror="this.src='https://ui-avatars.com/api/?name=Aman&background=1c1917&color=f59e0b&size=280'" 
+                    />
+                  </div>
+                  <!-- Name & Subtitle -->
+                  <div class="space-y-1 sm:space-y-1.5">
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-amber-50 tracking-tight">Aman</h3>
+                    <p class="text-xs sm:text-sm font-mono uppercase tracking-widest text-amber-400 font-semibold">Co-Host</p>
+                  </div>
+                </div>
+
+                <!-- Monospace Role Label -->
+                <span class="font-mono text-xs sm:text-sm text-neutral-500 whitespace-nowrap pt-1 sm:pt-2">
+                  Host & Creator
+                </span>
+              </div>
+
+              <!-- Bio with IMDb Link -->
+              <p class="text-neutral-300 text-base sm:text-lg leading-relaxed pt-2">
+                Once a celebrated child actor with an <a href="https://www.imdb.com/name/nm1900026/?ref_=nv_sr_srsg_0_tt_1_nm_7_in_0_q_aman%20johal" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 underline underline-offset-4 decoration-amber-500/40 hover:decoration-amber-400 transition-colors font-medium">IMDb</a> page to prove it, Aman has been obsessed with cinema since age ten. While his days on screen are long behind him, he will shamelessly invoke his former child-star status to grant himself unearned film-critic authority. When he’s not reliving the glory days, he’s obsessing over Letterboxd, where he refuses to reduce films to numbers, painstakingly writing out full reviews for every entry.
+              </p>
+            </div>
+
+            <!-- Socials Footer Row -->
+            <div class="pt-6 sm:pt-8 mt-6 sm:mt-8 border-t border-neutral-800/80 flex items-center justify-between gap-4">
+              <span class="text-sm sm:text-base font-mono uppercase tracking-widest text-amber-400 font-bold">
+                Socials
+              </span>
+              
+              <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+                <!-- 1. Letterboxd -->
+                <a 
+                  href="https://letterboxd.com/amanjohal/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Aman on Letterboxd"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 32 32">
+                    <circle cx="6" cy="16" r="4.5" fill="#FF8000"/>
+                    <circle cx="16" cy="16" r="4.5" fill="#00E054"/>
+                    <circle cx="26" cy="16" r="4.5" fill="#40BCF4"/>
+                  </svg>
+                </a>
+
+                <!-- 2. Instagram -->
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Aman on Instagram"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient id="ig-grad-aman-fixed" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#fdf497" />
+                        <stop offset="5%" stop-color="#fdf497" />
+                        <stop offset="45%" stop-color="#fd5949" />
+                        <stop offset="60%" stop-color="#d6249f" />
+                        <stop offset="90%" stop-color="#285AEB" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="url(#ig-grad-aman-fixed)" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="url(#ig-grad-aman-fixed)" stroke-width="2"/>
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad-aman-fixed)"/>
+                  </svg>
+                </a>
+
+                <!-- 3. LinkedIn -->
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Aman on LinkedIn"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24">
+                    <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+                    <path d="M5.5 8.5h3v10h-3v-10zm1.5-4.5c.966 0 1.75.784 1.75 1.75s-.784 1.75-1.75 1.75-1.75-.784-1.75-1.75.784-1.75 1.75-1.75zm11.5 14.5h-3v-5.2c0-1.3-.5-2.2-1.7-2.2-.9 0-1.5.6-1.7 1.2-.1.2-.1.5-.1.8v5.4h-3s.04-8.8 0-9.7h3v1.4c.4-.6 1.1-1.6 2.8-1.6 2 0 3.7 1.3 3.7 4.2v5.7z" fill="#ffffff"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- HOST 2: ANTONY -->
+          <div class="w-full bg-neutral-900/40 border border-neutral-800/80 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 backdrop-blur-sm flex flex-col justify-between hover:border-neutral-700/80 transition-colors shadow-2xl">
+            <div class="space-y-6">
+              <!-- Top Row: Avatar & Name on left, Monospace Role on right -->
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex items-center gap-4 sm:gap-6 md:gap-8">
+                  <!-- Responsive Square Avatar -->
+                  <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl overflow-hidden border-2 border-amber-500/50 bg-neutral-950 shrink-0 shadow-xl shadow-black/60">
+                    <img 
+                      src="/avatars/antony.jpg" 
+                      alt="Antony" 
+                      class="w-full h-full object-cover object-top block"
+                      onerror="this.src='https://ui-avatars.com/api/?name=Antony&background=1c1917&color=f59e0b&size=280'" 
+                    />
+                  </div>
+                  <!-- Name & Subtitle -->
+                  <div class="space-y-1 sm:space-y-1.5">
+                    <h3 class="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-amber-50 tracking-tight">Antony</h3>
+                    <p class="text-xs sm:text-sm font-mono uppercase tracking-widest text-amber-400 font-semibold">Co-Host</p>
+                  </div>
+                </div>
+
+                <!-- Monospace Role Label -->
+                <span class="font-mono text-xs sm:text-sm text-neutral-500 whitespace-nowrap pt-1 sm:pt-2">
+                  Host & Creator
+                </span>
+              </div>
+
+              <!-- Bio with Workshop Film Company Link -->
+              <p class="text-neutral-300 text-base sm:text-lg leading-relaxed pt-2">
+                Antony truly eats, sleeps, and breathes movies. It is an obsession that naturally began with a rite-of-passage first job at Blockbuster. He turned that early love into a degree in Motion Picture Arts from Capilano University and is now the co-founder and co-owner of <a href="https://www.workshopfilmcompany.com/" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:text-amber-300 underline underline-offset-4 decoration-amber-500/40 hover:decoration-amber-400 transition-colors font-medium">Workshop Film Company</a>. When he isn’t running the studio, you’ll routinely find him behind the camera, writing and directing his own projects.
+              </p>
+            </div>
+
+            <!-- Socials Footer Row -->
+            <div class="pt-6 sm:pt-8 mt-6 sm:mt-8 border-t border-neutral-800/80 flex items-center justify-between gap-4">
+              <span class="text-sm sm:text-base font-mono uppercase tracking-widest text-amber-400 font-bold">
+                Socials
+              </span>
+              
+              <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+                <!-- 1. Letterboxd -->
+                <a 
+                  href="https://letterboxd.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Antony on Letterboxd"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 32 32">
+                    <circle cx="6" cy="16" r="4.5" fill="#FF8000"/>
+                    <circle cx="16" cy="16" r="4.5" fill="#00E054"/>
+                    <circle cx="26" cy="16" r="4.5" fill="#40BCF4"/>
+                  </svg>
+                </a>
+
+                <!-- 2. Instagram -->
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Antony on Instagram"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24">
+                    <defs>
+                      <linearGradient id="ig-grad-antony-fixed" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#fdf497" />
+                        <stop offset="5%" stop-color="#fdf497" />
+                        <stop offset="45%" stop-color="#fd5949" />
+                        <stop offset="60%" stop-color="#d6249f" />
+                        <stop offset="90%" stop-color="#285AEB" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="url(#ig-grad-antony-fixed)" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="4" fill="none" stroke="url(#ig-grad-antony-fixed)" stroke-width="2"/>
+                    <circle cx="17.5" cy="6.5" r="1.2" fill="url(#ig-grad-antony-fixed)"/>
+                  </svg>
+                </a>
+
+                <!-- 3. LinkedIn -->
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Antony on LinkedIn"
+                  class="flex items-center justify-center p-1.5 rounded-xl hover:bg-neutral-800/70 transition-transform hover:scale-110"
+                >
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24">
+                    <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+                    <path d="M5.5 8.5h3v10h-3v-10zm1.5-4.5c.966 0 1.75.784 1.75 1.75s-.784 1.75-1.75 1.75-1.75-.784-1.75-1.75.784-1.75 1.75-1.75zm11.5 14.5h-3v-5.2c0-1.3-.5-2.2-1.7-2.2-.9 0-1.5.6-1.7 1.2-.1.2-.1.5-.1.8v5.4h-3s.04-8.8 0-9.7h3v1.4c.4-.6 1.1-1.6 2.8-1.6 2 0 3.7 1.3 3.7 4.2v5.7z" fill="#ffffff"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Support Floating Button & Popover -->
+    <SupportModal />
+
+    <!-- Global Footer -->
+    <footer class="border-t border-neutral-900 py-8 text-center text-xs text-neutral-500 bg-neutral-950">
+      <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>
