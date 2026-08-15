@@ -1,11 +1,46 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import '../styles/global.css';
+import { getEpisodes } from '../utils/rss';
+import Navbar from '../components/NavBar.astro';
+import Hero from '../components/HeroBanner.astro';
+import LatestEpisodeBlock from '../components/LatestEpisodeBlock.astro';
+import EpisodeTimeline from '../components/EpisodeTimeline.astro';
+import SupportModal from '../components/SupportModal.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const SPOTIFY_RSS_URL = 'https://anchor.fm/s/115f159d0/podcast/rss';
+const episodes = await getEpisodes(SPOTIFY_RSS_URL);
+
+const latestEpisode = episodes[0];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en" class="bg-neutral-950 text-neutral-100 font-sans antialiased scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Before and After the Movies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <!-- Global Navigation Bar -->
+    <Navbar />
+
+    <!-- BLOCK 1: Hero Banner -->
+    <Hero />
+
+    <!-- BLOCK 2: Featured Latest Episode -->
+    {latestEpisode && <LatestEpisodeBlock episode={latestEpisode} />}
+
+    <!-- BLOCK 3: Scrollable Recent Episodes Timeline -->
+    {episodes.length > 0 && <EpisodeTimeline episodes={episodes} />}
+
+<!-- 2. Self-contained Support Modal Component -->
+    <SupportModal />
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-900 py-8 text-center text-xs text-neutral-500 bg-neutral-950">
+      <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>

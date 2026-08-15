@@ -1,0 +1,212 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/NavBar.astro';
+
+// Replace with your actual Google reCAPTCHA v2 (Checkbox) Site Key
+const RECAPTCHA_SITE_KEY = 'YOUR_RECAPTCHA_SITE_KEY_HERE';
+---
+
+<html lang="en" class="bg-neutral-950 text-neutral-100 font-sans antialiased selection:bg-amber-500/20 selection:text-amber-200">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connect | Before and After the Movies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <Navbar currentPath="/contact" />
+
+    <main class="max-w-4xl mx-auto px-6 py-16 w-full flex-grow relative">
+      
+      <!-- Ambient Background Glow -->
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-950/20 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+      <!-- Header Section -->
+      <header class="mb-12 space-y-3">
+        <p class="text-xs font-mono tracking-widest text-amber-400/80 uppercase font-semibold">
+          Before & After the Movies
+        </p>
+        <h1 class="text-5xl md:text-6xl font-serif font-bold text-amber-50 tracking-tight">
+          Connect
+        </h1>
+        <p class="text-neutral-400 text-base md:text-lg max-w-xl leading-relaxed font-sans">
+          Want to collaborate, request movie topics, or send us a message? Drop us a note and we'll get back to you.
+        </p>
+      </header>
+
+      <!-- Form Card Container with Forced Explicit Padding -->
+      <div 
+        class="bg-neutral-900/60 border border-neutral-800/80 rounded-2xl shadow-2xl backdrop-blur-sm max-w-2xl"
+        style="padding: 2.5rem;"
+      >
+        
+        <div class="mb-8">
+          <h2 class="text-2xl font-serif font-bold text-amber-50">
+            Send us a message
+          </h2>
+          <p class="text-neutral-400 text-sm mt-1.5 leading-relaxed">
+            We're happy to hear from you with any question or feedback you may have.
+          </p>
+        </div>
+
+        <form id="contact-form" class="space-y-6" novalidate>
+          
+          <!-- Name Field -->
+          <div class="relative space-y-1">
+            <div class="relative flex items-center">
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                placeholder="Your Name"
+                class="w-full bg-neutral-950/70 border border-neutral-800 rounded-xl px-5 py-4 text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-sans pr-36"
+                required
+              />
+              <span id="name-error" class="hidden absolute right-5 text-xs italic font-sans text-rose-400 pointer-events-none">
+                Name is required.
+              </span>
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="relative space-y-1">
+            <div class="relative flex items-center">
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="Your Email"
+                class="w-full bg-neutral-950/70 border border-neutral-800 rounded-xl px-5 py-4 text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-sans pr-36"
+                required
+              />
+              <span id="email-error" class="hidden absolute right-5 text-xs italic font-sans text-rose-400 pointer-events-none">
+                Email is required.
+              </span>
+            </div>
+          </div>
+
+          <!-- Message Field -->
+          <div class="relative space-y-1">
+            <div class="relative">
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="5"
+                placeholder="Your Message"
+                class="w-full bg-neutral-950/70 border border-neutral-800 rounded-xl p-5 text-sm text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-sans resize-y"
+                required
+              ></textarea>
+              <span id="message-error" class="hidden absolute right-5 bottom-5 text-xs italic font-sans text-rose-400 pointer-events-none">
+                Message is required.
+              </span>
+            </div>
+          </div>
+
+          <!-- Google reCAPTCHA Box -->
+          <div class="pt-2 space-y-2">
+            <div class="g-recaptcha" data-sitekey={RECAPTCHA_SITE_KEY} data-theme="dark"></div>
+            <p id="captcha-error" class="hidden text-xs text-rose-400 font-mono">
+              Please complete the reCAPTCHA verification.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4">
+            <button 
+              type="submit"
+              class="w-full sm:w-auto px-8 py-3.5 bg-[#D35F48] hover:bg-[#be523d] text-white font-semibold text-sm rounded-xl transition-all shadow-lg hover:shadow-red-950/50 cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span>Send Message</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Success Alert -->
+          <div id="form-success" class="hidden p-4 rounded-xl bg-emerald-950/40 border border-emerald-800 text-emerald-300 text-sm font-sans">
+            Thank you! Your message has been sent successfully.
+          </div>
+
+        </form>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-900 py-8 text-center text-xs text-neutral-500 bg-neutral-950">
+      <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
+    </footer>
+
+    <!-- Client-side Validation Script -->
+    <script is:inline>
+      const form = document.getElementById('contact-form');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const messageInput = document.getElementById('message');
+      
+      const nameError = document.getElementById('name-error');
+      const emailError = document.getElementById('email-error');
+      const messageError = document.getElementById('message-error');
+      const captchaError = document.getElementById('captcha-error');
+      const formSuccess = document.getElementById('form-success');
+
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let isValid = true;
+
+        // Name validation
+        if (!nameInput.value.trim()) {
+          nameError?.classList.remove('hidden');
+          nameInput.classList.add('border-rose-500/80');
+          isValid = false;
+        } else {
+          nameError?.classList.add('hidden');
+          nameInput.classList.remove('border-rose-500/80');
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+          emailError?.classList.remove('hidden');
+          emailInput.classList.add('border-rose-500/80');
+          isValid = false;
+        } else {
+          emailError?.classList.add('hidden');
+          emailInput.classList.remove('border-rose-500/80');
+        }
+
+        // Message validation
+        if (!messageInput.value.trim()) {
+          messageError?.classList.remove('hidden');
+          messageInput.classList.add('border-rose-500/80');
+          isValid = false;
+        } else {
+          messageError?.classList.add('hidden');
+          messageInput.classList.remove('border-rose-500/80');
+        }
+
+        // reCAPTCHA validation
+        // @ts-ignore
+        const captchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+        if (!captchaResponse) {
+          captchaError?.classList.remove('hidden');
+          isValid = false;
+        } else {
+          captchaError?.classList.add('hidden');
+        }
+
+        if (isValid) {
+          formSuccess?.classList.remove('hidden');
+          form.reset();
+          // @ts-ignore
+          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        }
+      });
+    </script>
+  </body>
+</html>

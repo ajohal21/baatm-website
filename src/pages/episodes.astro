@@ -1,0 +1,245 @@
+---
+import '../styles/global.css';
+import { getEpisodes } from '../utils/rss';
+import Navbar from '../components/NavBar.astro';
+import AudioPlayer from '../components/AudioPlayer.astro';
+
+const SPOTIFY_RSS_URL = 'https://anchor.fm/s/115f159d0/podcast/rss';
+const episodes = await getEpisodes(SPOTIFY_RSS_URL);
+
+const cleanText = (str: string) => {
+  return str
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+---
+
+<html lang="en" class="bg-neutral-950 text-neutral-100 font-sans antialiased scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Episodes | Before and After the Movies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen flex flex-col justify-between">
+    
+    <!-- Global Navigation -->
+    <Navbar currentPath="/episodes" />
+
+    <main class="max-w-4xl mx-auto px-6 py-12 w-full flex-grow">
+      
+<!-- Search Bar Input -->
+<div class="mb-12 max-w-xs">
+  <div class="relative flex items-center border-b border-neutral-800 pb-2 hover:border-amber-400 focus-within:border-amber-400 transition-colors">
+    <svg class="w-4 h-4 text-neutral-500 mr-2.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Search podcast..." 
+      class="bg-transparent text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none w-full font-sans cursor-pointer focus:cursor-text"
+    />
+  </div>
+</div>
+
+      <!-- Episode List Container -->
+      <div id="episode-list" class="space-y-10">
+        {episodes.map((ep, idx) => {
+          const isLatest = idx === 0;
+          const playerId = `list-ep-${idx}`;
+          const cleanedDesc = cleanText(ep.description);
+          const isLongText = cleanedDesc.length > 140;
+          const isInitiallyHidden = idx >= 10; // Hide everything past the first 10
+
+          return (
+            <article 
+              class={`episode-item border-b border-neutral-900 pb-10 flex flex-col sm:flex-row gap-6 items-start w-full transition-all duration-300 ${isInitiallyHidden ? 'hidden' : ''}`}
+              data-title={ep.title.toLowerCase()}
+              data-description={cleanedDesc.toLowerCase()}
+              data-index={idx}
+            >
+              
+              <!-- Fixed Size Thumbnail Column -->
+              <div class="w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0 relative group">
+                {ep.coverArt ? (
+                  <img 
+                    src={ep.coverArt} 
+                    alt={ep.title} 
+                    class="w-full h-full object-cover rounded-lg border border-neutral-800 shadow-sm"
+                  />
+                ) : (
+                  <div class="w-full h-full rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[10px] text-neutral-500">
+                    No Art
+                  </div>
+                )}
+              </div>
+
+              <!-- Flexible Content Column -->
+              <div class="flex-grow space-y-2.5 min-w-0">
+                
+                <!-- Title -->
+                <h2 class="text-xl md:text-2xl font-serif font-bold text-amber-50 hover:text-amber-400 transition-colors leading-tight">
+                  {ep.title}
+                </h2>
+
+                <!-- Metadata Row -->
+                <div class="flex flex-wrap items-center gap-2 md:gap-3 text-xs font-mono text-neutral-500">
+                  <span>{ep.pubDate}</span>
+                  {ep.duration && <span>| {ep.duration}</span>}
+                  
+                  {isLatest && (
+                    <span class="px-2 py-0.5 bg-neutral-900 text-neutral-300 border border-neutral-800 text-[10px] rounded font-sans ml-1">
+                      Latest Episode
+                    </span>
+                  )}
+                </div>
+
+                <!-- Summary Description Block -->
+                <div class="space-y-1">
+                  <p 
+                    id={`desc-${idx}`} 
+                    class="description-text text-neutral-400 text-sm leading-relaxed font-sans line-clamp-2 transition-all duration-300"
+                  >
+                    {cleanedDesc}
+                  </p>
+
+                  {isLongText && (
+                    <button 
+                      data-target={`desc-${idx}`}
+                      class="toggle-desc-btn text-xs font-mono text-amber-500 hover:text-amber-400 transition-colors cursor-pointer pt-0.5 inline-block focus:outline-none"
+                    >
+                      Show more +
+                    </button>
+                  )}
+                </div>
+
+                <!-- Inline Audio Player -->
+                <div class="pt-2 w-full">
+                  <AudioPlayer audioUrl={ep.audioUrl} id={playerId} />
+                </div>
+
+              </div>
+
+            </article>
+          );
+        })}
+      </div>
+
+      <!-- Load More Button Container -->
+      {episodes.length > 10 && (
+        <div id="load-more-container" class="pt-12 text-center">
+          <button
+            id="load-more-btn"
+            class="px-6 py-3 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 text-amber-400 font-mono text-xs uppercase tracking-wider font-semibold rounded-lg transition-all cursor-pointer shadow-md"
+          >
+            Load More Episodes
+          </button>
+        </div>
+      )}
+
+      <!-- No Results Feedback -->
+      <div id="no-results" class="hidden text-center py-16 text-neutral-500 font-mono text-sm">
+        No episodes found matching your search.
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-neutral-900 py-8 text-center text-xs text-neutral-500 bg-neutral-950">
+      <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
+    </footer>
+
+    <!-- Client-side Scripts -->
+    <script is:inline>
+      // 1. Show More / Show Less Description Toggle Script
+      document.querySelectorAll('.toggle-desc-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const descEl = document.getElementById(targetId);
+
+          if (descEl) {
+            const isClamped = descEl.classList.contains('line-clamp-2');
+
+            if (isClamped) {
+              descEl.classList.remove('line-clamp-2');
+              btn.textContent = 'Show less -';
+            } else {
+              descEl.classList.add('line-clamp-2');
+              btn.textContent = 'Show more +';
+            }
+          }
+        });
+      });
+
+      // 2. Load Next 10 Episodes Pagination Script
+      let visibleCount = 10;
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadMoreContainer = document.getElementById('load-more-container');
+      const episodeItems = document.querySelectorAll('.episode-item');
+
+      loadMoreBtn?.addEventListener('click', () => {
+        const nextBatch = visibleCount + 10;
+
+        episodeItems.forEach((item, idx) => {
+          if (idx < nextBatch) {
+            item.classList.remove('hidden');
+          }
+        });
+
+        visibleCount = nextBatch;
+
+        if (visibleCount >= episodeItems.length) {
+          loadMoreContainer?.classList.add('hidden');
+        }
+      });
+
+      // 3. Search Script (Handles pagination state gracefully)
+      const searchInput = document.getElementById('search-input');
+      const noResults = document.getElementById('no-results');
+
+      searchInput?.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let matches = 0;
+
+        if (query.length > 0) {
+          // Hide "Load More" while searching
+          loadMoreContainer?.classList.add('hidden');
+
+          episodeItems.forEach((item) => {
+            const title = item.getAttribute('data-title') || '';
+            const description = item.getAttribute('data-description') || '';
+
+            if (title.includes(query) || description.includes(query)) {
+              item.classList.remove('hidden');
+              matches++;
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        } else {
+          // Reset to paginated view when search input cleared
+          episodeItems.forEach((item, idx) => {
+            if (idx < visibleCount) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+
+          if (visibleCount < episodeItems.length) {
+            loadMoreContainer?.classList.remove('hidden');
+          }
+        }
+
+        if (matches === 0 && query.length > 0) {
+          noResults?.classList.remove('hidden');
+        } else {
+          noResults?.classList.add('hidden');
+        }
+      });
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,56 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = Astro.url.pathname } = Astro.props;
+
+const navLinks = [
+  { name: 'Home', href: '/' },
+  { name: 'Episodes', href: '/episodes' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' }
+];
+
+const isActive = (href: string) => {
+  if (href === '/' && currentPath === '/') return true;
+  if (href !== '/' && currentPath.startsWith(href)) return true;
+  return false;
+};
+---
+
+<header class="w-full bg-neutral-950/80 backdrop-blur-md border-b border-neutral-900 sticky top-0 z-40">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    
+    <!-- Podcast Brand Title -->
+    <a 
+      href="/" 
+      class="text-xl md:text-2xl font-serif font-bold text-amber-50 hover:text-amber-200 transition-colors tracking-tight"
+    >
+      Before & After The Movies
+    </a>
+
+    <!-- Navigation Links -->
+    <nav class="flex items-center gap-6 sm:gap-8 font-sans text-sm font-medium">
+      {navLinks.map((link) => {
+        const active = isActive(link.href);
+        return (
+          <a
+            href={link.href}
+            class={`transition-colors py-1 relative ${
+              active 
+                ? 'text-amber-400 font-semibold' 
+                : 'text-neutral-400 hover:text-neutral-100'
+            }`}
+          >
+            {link.name}
+            {active && (
+              <span class="absolute bottom-0 left-0 w-full h-[2px] bg-amber-400 rounded-full"></span>
+            )}
+          </a>
+        );
+      })}
+    </nav>
+
+  </div>
+</header>

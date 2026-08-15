@@ -1,0 +1,99 @@
+---
+interface Props {
+  audioUrl: string;
+  id: string;
+}
+
+const { audioUrl, id } = Astro.props;
+---
+
+<div class="custom-audio-player bg-neutral-900 border border-neutral-800 p-4 rounded-xl flex items-center gap-4 w-full" data-player-id={id}>
+  <!-- Hidden Audio Element -->
+  <audio id={`audio-${id}`} src={audioUrl} preload="metadata"></audio>
+
+  <!-- Play / Pause Button -->
+  <button 
+    id={`play-btn-${id}`} 
+    class="play-btn w-12 h-12 flex-shrink-0 bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-full flex items-center justify-center font-bold transition-all shadow-lg cursor-pointer"
+    aria-label="Play Episode"
+  >
+    <svg id={`play-icon-${id}`} class="w-5 h-5 fill-current ml-0.5" viewBox="0 0 24 24">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    <svg id={`pause-icon-${id}`} class="w-5 h-5 fill-current hidden" viewBox="0 0 24 24">
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+    </svg>
+  </button>
+
+  <!-- Track Progress & Time -->
+  <div class="flex-grow space-y-1">
+    <div class="flex justify-between text-xs font-mono text-neutral-400">
+      <span id={`current-time-${id}`}>0:00</span>
+      <span id={`duration-${id}`}>--:--</span>
+    </div>
+
+    <input 
+      type="range" 
+      id={`seek-bar-${id}`} 
+      value="0" 
+      max="100" 
+      class="seek-bar w-full h-1.5 bg-neutral-800 accent-amber-500 rounded-lg appearance-none cursor-pointer"
+    />
+  </div>
+</div>
+
+<script is:inline define:vars={{ id }}>
+  const audio = document.getElementById(`audio-${id}`);
+  const playBtn = document.getElementById(`play-btn-${id}`);
+  const playIcon = document.getElementById(`play-icon-${id}`);
+  const pauseIcon = document.getElementById(`pause-icon-${id}`);
+  const currentTimeEl = document.getElementById(`current-time-${id}`);
+  const durationEl = document.getElementById(`duration-${id}`);
+  const seekBar = document.getElementById(`seek-bar-${id}`);
+
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
+  });
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      document.querySelectorAll('audio').forEach((a) => {
+        if (a !== audio) a.pause();
+      });
+      audio.play();
+      playIcon.classList.add('hidden');
+      pauseIcon.classList.remove('hidden');
+    } else {
+      audio.pause();
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    if (audio.duration) {
+      const progress = (audio.currentTime / audio.duration) * 100;
+      seekBar.value = progress;
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    playIcon.classList.remove('hidden');
+    pauseIcon.classList.add('hidden');
+    seekBar.value = 0;
+  });
+
+  seekBar.addEventListener('input', () => {
+    if (audio.duration) {
+      audio.currentTime = (seekBar.value / 100) * audio.duration;
+    }
+  });
+</script>
