@@ -37,11 +37,11 @@ export const POST: APIRoute = async ({ request }) => {
     const resend = new Resend(resendApiKey);
 
     const { error } = await resend.emails.send({
-      from: 'Before & After the Movies <onboarding@resend.dev>', // Resend's free test domain
-      to: [toEmail],
-      replyTo: email,
-      subject: `New Podcast Contact Message from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+    from: 'Before & After the Movies <contact@beforeandafterthemovies.com>',
+    to: [toEmail],
+    replyTo: email,
+    subject: `New Podcast Contact Message from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
     });
 
     if (error) {
