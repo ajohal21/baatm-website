@@ -142,7 +142,7 @@ const RECAPTCHA_SITE_KEY = '6LcDPY0tAAAAADSCqKkidjw4C38XDqvbn5xEtoVY';
       <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
     </footer>
 
-    <!-- Client-side Validation Script -->
+    <!-- Client-side Validation & Submission Script -->
     <script is:inline>
       const form = document.getElementById('contact-form');
       const nameInput = document.getElementById('name');
@@ -154,8 +154,9 @@ const RECAPTCHA_SITE_KEY = '6LcDPY0tAAAAADSCqKkidjw4C38XDqvbn5xEtoVY';
       const messageError = document.getElementById('message-error');
       const captchaError = document.getElementById('captcha-error');
       const formSuccess = document.getElementById('form-success');
+      const submitBtn = form?.querySelector('button[type="submit"]');
 
-      form?.addEventListener('submit', (e) => {
+      form?.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         let isValid = true;
@@ -201,11 +202,48 @@ const RECAPTCHA_SITE_KEY = '6LcDPY0tAAAAADSCqKkidjw4C38XDqvbn5xEtoVY';
           captchaError?.classList.add('hidden');
         }
 
-        if (isValid) {
-          formSuccess?.classList.remove('hidden');
-          form.reset();
-          // @ts-ignore
-          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+        if (!isValid) return;
+
+        // Disable button while sending
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerText = 'Sending...';
+        }
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: nameInput.value.trim(),
+              email: emailInput.value.trim(),
+              message: messageInput.value.trim(),
+              recaptchaToken: captchaResponse
+            }),
+          });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            formSuccess?.classList.remove('hidden');
+            form.reset();
+            // @ts-ignore
+            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+          } else {
+            alert(result.error || 'Something went wrong. Please try again.');
+          }
+        } catch (err) {
+          alert('Network error. Please try again later.');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `
+              <span>Send Message</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            `;
+          }
         }
       });
     </script>
