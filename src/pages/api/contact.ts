@@ -143,28 +143,3 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: 'Internal server error' }, 500);
   }
 };
-    const resend = new Resend(resendApiKey);
-
-    const { error } = await resend.emails.send({
-    from: 'Before & After the Movies <contact@beforeandafterthemovies.com>',
-    to: [toEmail],
-    replyTo: email,
-    subject: `New Podcast Contact Message from ${name}`,
-    text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-    });
-
-    if (error) {
-      return new Response(JSON.stringify({ error: error.message }), { status: 500 });
-    }
-
-    return new Response(
-      JSON.stringify({ success: true, message: 'Message sent successfully!' }),
-      { status: 200 }
-    );
-  } catch (err: any) {
-    return new Response(
-      JSON.stringify({ error: err.message || 'Internal server error' }),
-      { status: 500 }
-    );
-  }
-};
