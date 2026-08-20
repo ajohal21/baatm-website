@@ -248,5 +248,13 @@ const cleanText = (str: string) => {
     <!-- 2. Self-contained Support Modal Component -->
     <SupportModal />
 
+    <!-- Vercel Analytics & Speed Insights -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      import { injectSpeedInsights } from '@vercel/speed-insights';
+
+      inject();
+      injectSpeedInsights();
+    </script>
   </body>
 </html>

@@ -289,5 +289,13 @@ import SupportModal from '../components/SupportModal.astro';
       <p>© {new Date().getFullYear()} Before and After the Movies. All rights reserved.</p>
     </footer>
 
+    <!-- Vercel Analytics & Speed Insights -->
+    <script>
+      import { inject } from '@vercel/analytics';
+      import { injectSpeedInsights } from '@vercel/speed-insights';
+
+      inject();
+      injectSpeedInsights();
+    </script>
   </body>
 </html>
